@@ -1,0 +1,12 @@
+# Exclude development-only sources and tooling assets from the VSIX
+node_modules/**
+src/**
+**/*.ts
+**/*.map
+**/*.test.*
+.vscode/**
+package-lock.json
+scripts/**
+tsconfig.json
+docs/dev/**
+/*.vsix

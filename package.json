@@ -1,0 +1,51 @@
+{
+	"name": "gl-git-links",
+	"displayName": "gl: git links",
+	"description": "Navigate gl: links inside markdown documents.",
+	"version": "0.3.1",
+	"publisher": "mj41",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mj41/vscode-gl-git-links.git"
+	},
+	"homepage": "https://github.com/mj41/vscode-gl-git-links",
+	"bugs": {
+		"url": "https://github.com/mj41/vscode-gl-git-links/issues"
+	},
+	"main": "./out/extension.js",
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Linters"
+	],
+	"keywords": [
+		"markdown",
+		"git",
+		"link",
+		"gl",
+		"navigation"
+	],
+	"activationEvents": [
+		"onLanguage:markdown"
+	],
+	"contributes": {
+		"markdown.markdownItPlugins": true
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -p ./ -w",
+		"test": "mocha -r ts-node/register -r ./src/test/vscodeMock.ts \"src/test/**/*.test.ts\""
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.7",
+		"@types/node": "^20.11.0",
+		"@types/vscode": "^1.90.0",
+		"mocha": "^10.5.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.0"
+	}
+}
