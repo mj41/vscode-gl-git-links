@@ -223,7 +223,7 @@ The extension:
 ```bash
 npm install -g @vscode/vsce
 vsce package
-code --install-extension gl-git-links-0.3.0.vsix
+code-insiders --install-extension gl-git-links-0.3.1.vsix
 ```
 
 ### From Marketplace

@@ -10,8 +10,8 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('gl-git-links extension activating');
 
 	const selector: vscode.DocumentSelector = [
-		{ language: 'markdown', scheme: 'file' },
-		{ language: 'markdown', scheme: 'untitled' }
+		{ scheme: 'file' },
+		{ scheme: 'untitled' }
 	];
 
 	// gl:README.md#L17-L23 documents the activation workflow users follow in Quick Start.

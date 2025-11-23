@@ -1,7 +1,7 @@
 {
 	"name": "gl-git-links",
 	"displayName": "gl: git links",
-	"description": "Navigate gl: links inside markdown documents.",
+	"description": "Navigate gl: links inside any file.",
 	"version": "0.3.1",
 	"publisher": "mj41",
 	"license": "Apache-2.0",
@@ -29,7 +29,7 @@
 		"navigation"
 	],
 	"activationEvents": [
-		"onLanguage:markdown"
+		"*"
 	],
 	"contributes": {
 		"markdown.markdownItPlugins": true
