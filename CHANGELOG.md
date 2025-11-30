@@ -2,6 +2,10 @@
 
 All notable changes to the "gl-git-links" extension will be documented in this file.
 
+## [0.3.2]
+
+- Use images in README.md that better showcase `gl:` link detection across various file types and programming languages.
+
 ## [0.3.1]
 
 - Enable `gl:` link detection and navigation in all file types (previously restricted to Markdown).

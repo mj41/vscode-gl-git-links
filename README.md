@@ -39,58 +39,40 @@ gl:./../uncle/cousin.py#L10     - Parent directory relative
 ### Markdown Links
 
 **Inline links:**
-```markdown
-[docs](gl:docs/some-file.md)
-[api](gl:docs/api.md#L42)
-```
+
+ ![inline-links](docs/imgs/inline-links.png)
 
 **With special characters (wrapped in `<...>`):**
-```markdown
-[docs](<gl:docs/some file.md>)
-[api](<gl:docs/file(v2).md>)
-```
+
+ ![special-chars](docs/imgs/special-chars.png)
 
 **Autolinks:**
-```markdown
-<gl:docs/file.md>
-<gl:file.md#L42>
-```
+
+ ![autolinks](docs/imgs/autolinks.png)
 
 **Extended autolinks (GFM-style):**
-```markdown
-See gl:docs/details.md#L42 for more information.
-Check gl:readme.md for the overview.
-```
+
+ ![extended-autolinks](docs/imgs/extended-autolinks.png)
 
 **Reference links:**
-```markdown
-[docs][ref]
-[ref]: gl:docs/spec.md "Documentation"
-```
+
+ ![reference-links](docs/imgs/reference-links.png)
 
 ### Plain Text and Comments
 
 The extension recognizes `gl:` links in plain text files and programming language comments:
 
 **Go:**
-```go
-// See gl:docs/api.md for details.
-// Link: gl:pkg/utils.go#L42
-/* Block comment: gl:readme.md */
-```
+
+ ![go-code](docs/imgs/go-code.png)
 
 **Python:**
-```python
-# See gl:docs/api.md for details.
-# Link: gl:src/utils.py#L42
-```
+
+ ![python-code](docs/imgs/python-code.png)
 
 **JavaScript:**
-```javascript
-// See gl:docs/api.md for details.
-// Link: gl:src/utils.js#L42
-/* Multi-line comment with gl:config/setup.md link */
-```
+
+ ![javascript-code](docs/imgs/javascript-code.png)
 
 ## Example Repository Structure
 
@@ -110,11 +92,8 @@ Links from `dad/me.go`:
 - `gl:./../uncle/cousin.py#L10` - Links to cousin file
 
 Markdown links from `readme.md`:
-```markdown
-[intro](gl:readme.md#L12)
-[see code](gl:dad/me.go#L5)
-[range](gl:dad/sister.go#L10-L20)
-```
+
+ ![repoA-example](docs/imgs/repoA-example.png)
 
 ## Path Resolution
 
@@ -223,7 +202,7 @@ The extension:
 ```bash
 npm install -g @vscode/vsce
 vsce package
-code-insiders --install-extension gl-git-links-0.3.1.vsix
+code-insiders --install-extension gl-git-links-0.3.2.vsix
 ```
 
 ### From Marketplace
