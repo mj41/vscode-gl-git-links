@@ -2,7 +2,7 @@
 	"name": "gl-git-links",
 	"displayName": "gl: git links",
 	"description": "Navigate gl: links inside any file.",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"publisher": "mj41",
 	"license": "Apache-2.0",
 	"repository": {
