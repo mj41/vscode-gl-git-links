@@ -6,6 +6,30 @@ import { ResolutionContext } from './types';
 export function createGlMarkdownItPlugin() {
 	// gl:README.md#L14-L15 explains the Markdown preview rewrites and extended autolink support implemented here.
 	return (md: any) => {
+		// Register 'gl' as a custom scheme for linkify-it so extended autolinks (plain text gl:... patterns)
+		// are automatically converted to links by markdown-it's linkify feature.
+		// This enables patterns like "See gl:readme.md for details" to become clickable in preview.
+		if (md.linkify && typeof md.linkify.add === 'function') {
+			md.linkify.add('gl:', {
+				validate: (text: string, pos: number, self: any) => {
+					const tail = text.slice(pos);
+					if (!self.re.gl) {
+						// Match path and optional #L fragment, stopping at whitespace or certain punctuation
+						// The pattern captures: path/to/file.ext#L123-L456 or path/to/file.ext
+						self.re.gl = /^[^\s<>[\]()]*[^\s<>[\]().,;:!?'"]/;
+					}
+					const match = self.re.gl.exec(tail);
+					if (match) {
+						return match[0].length;
+					}
+					return 0;
+				},
+				normalize: (match: any) => {
+					match.url = 'gl:' + match.url;
+				}
+			});
+		}
+
 		md.core.ruler.after('linkify', 'gl-git-links', (state: any) => {
 			const env = state.env ?? {};
 			for (let index = 0; index < state.tokens.length; index++) {

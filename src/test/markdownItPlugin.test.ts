@@ -25,9 +25,25 @@ function createLinkToken(href: string): MarkdownItLikeToken {
 	};
 }
 
+interface LinkifyMock {
+	schemes: Map<string, { validate: (text: string, pos: number, self: any) => number; normalize: (match: any) => void }>;
+	add(scheme: string, options: { validate: (text: string, pos: number, self: any) => number; normalize: (match: any) => void }): void;
+}
+
+function createLinkifyMock(): LinkifyMock {
+	const schemes = new Map<string, { validate: (text: string, pos: number, self: any) => number; normalize: (match: any) => void }>();
+	return {
+		schemes,
+		add(scheme: string, options: { validate: (text: string, pos: number, self: any) => number; normalize: (match: any) => void }) {
+			schemes.set(scheme, options);
+		}
+	};
+}
+
 function runPlugin(tokens: MarkdownItLikeToken[], env: any): void {
 	const handlers: Array<(state: { tokens: MarkdownItLikeToken[]; env: any }) => void> = [];
 	const md = {
+		linkify: createLinkifyMock(),
 		core: {
 			ruler: {
 				after: (_before: string, _name: string, fn: (state: { tokens: MarkdownItLikeToken[]; env: any }) => void) => {
@@ -133,5 +149,76 @@ describe('markdownItPlugin', () => {
 
 		const dataEntry = token.attrs.find(entry => entry[0] === 'data-gl-original-href');
 		assert.strictEqual(dataEntry, undefined);
+	});
+
+	it('registers gl: scheme with linkify for extended autolinks', () => {
+		const linkifyMock = createLinkifyMock();
+		const md = {
+			linkify: linkifyMock,
+			core: {
+				ruler: {
+					after: () => { }
+				}
+			}
+		};
+
+		const plugin = createGlMarkdownItPlugin();
+		plugin(md);
+
+		assert.ok(linkifyMock.schemes.has('gl:'), 'gl: scheme should be registered');
+	});
+
+	it('linkify validate function matches gl paths correctly', () => {
+		const linkifyMock = createLinkifyMock();
+		const md = {
+			linkify: linkifyMock,
+			core: {
+				ruler: {
+					after: () => { }
+				}
+			}
+		};
+
+		const plugin = createGlMarkdownItPlugin();
+		plugin(md);
+
+		const glScheme = linkifyMock.schemes.get('gl:');
+		assert.ok(glScheme);
+
+		const self = { re: {} as Record<string, RegExp> };
+
+		// Test: simple path
+		assert.strictEqual(glScheme.validate('readme.md for details', 0, self), 9);
+
+		// Test: path with fragment
+		assert.strictEqual(glScheme.validate('docs/file.md#L42 end', 0, self), 16);
+
+		// Test: path ending with punctuation should stop before it
+		assert.strictEqual(glScheme.validate('readme.md. more text', 0, self), 9);
+
+		// Test: path with line range
+		assert.strictEqual(glScheme.validate('file.go#L10-L20 end', 0, self), 15);
+	});
+
+	it('linkify normalize function adds gl: prefix', () => {
+		const linkifyMock = createLinkifyMock();
+		const md = {
+			linkify: linkifyMock,
+			core: {
+				ruler: {
+					after: () => { }
+				}
+			}
+		};
+
+		const plugin = createGlMarkdownItPlugin();
+		plugin(md);
+
+		const glScheme = linkifyMock.schemes.get('gl:');
+		assert.ok(glScheme);
+
+		const match = { url: 'readme.md#L5' };
+		glScheme.normalize(match);
+		assert.strictEqual(match.url, 'gl:readme.md#L5');
 	});
 });
